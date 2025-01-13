@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+        background-color:  #b5d4f2;
+        
+      }
+
+      #container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .questions {
+        font-size: 1.8rem;
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 1rem 2rem;
+        margin-bottom: 1rem;
+        border-radius: 1rem;
+        color: #ffff;
+        background-color: #2f6ba7;
+        box-shadow: 0 4px 8px 0 rgba(16, 12, 15, 0.2), 0 6px 20px 0 rgba(29, 26, 26, 0.19);
+        
+      }
+      #question {
+        margin-bottom: 2rem;
+      }
+      label {
+        margin-left: 0.8rem;
+      }
+     
+      #option {
+        margin-bottom: 1rem;
+        display: flex;
+      }
+
+      input[type=radio] {
+       border: 0px;
+       width: 1.3rem;
+       height: 2rem;
+}
+      #result {
+        font-size: 2rem;
+        margin: 1rem;
+      }
+      #next-btn {
+        font-size: 2rem;
+        margin: 5px;
+        padding: 1rem 2rem;
+        cursor: pointer;
+        color: #ffff;
+        border: 2px solid #2f6ba7;
+        border-radius: 1rem;
+        background-color: #2f6ba7;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+      #next-btn:hover {
+        background-color: #055db4;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+        <div id="quiz">
+            <div class="questions">
+              <p id="question"></p>
+              <div id="option">
+                  <input
+                  onclick="checkAnswer(0)"
+                  type="radio"
+                  id="input1"
+                  class="input"
+                  name="option"
+                /><label id="option1" for="input1"></label></div>
+              <div id="option">
+                  <input
+                onclick="checkAnswer(1)"
+                type="radio"
+                id="input2"
+                class="input"
+                name="option"
+              /><label id="option2" for="input2"></label>
+              </div>
+              <div id="option">
+                  <input
+                  onclick="checkAnswer(2)"
+                  type="radio"
+                  id="input3"
+                  class="input"
+                  name="option"
+                /><label id="option3" for="input3"></label>
+              </div>
+              
+            </div>
+          </div>
+          <p id="result"></p>
+          <button id="next-btn">Next</button>
+    </div>
+    
+
+    <script>
+      const result = document.getElementById("result");
+      const inputs = document.getElementsByClassName("input");
+      const nextButton = document.getElementById("next-btn");
+      let questionIndex = 0;
+      const questionsData = [
+        {
+          question: "What is the capital of France ?",
+          options: ["Paris", "London", "Rome"],
+          answer: 0,
+        },
+        {
+          question: "Which city is the capital of Canada ?",
+          options: ["Toronto", "Ottawa", "Montreal"],
+          answer: 1,
+        },
+        {
+          question: "Which city is the capital of United Arab Emirates ?",
+          options: ["Abu Dhabi", "Dubai", "Al Ain"],
+          answer: 0,
+        },
+        {
+          question: "Which city is the capital of Cuba ?",
+          options: ["Santa Clara", "Havana", "Varadero"],
+          answer: 1,
+        },
+        {
+          question: "Which city is the capital of Germany ?",
+          options: ["Rome", "Berlin", "Paris"],
+          answer: 2,
+        },
+        {
+          question: "Which city is the capital of Argentina ?",
+          options: ["Santiago", "Lima", "Buenos Aires"],
+          answer: 2,
+        },
+        {
+          question: "Which city is the capital of Turkey ?",
+          options: ["Istanbul", "Antalya", "Ankara"],
+          answer: 2,
+        },
+        {
+          question: "Which city is the capital of Mongolia ?",
+          options: ["Ulaanbaatar", "Darkhan", "Choibalsan"],
+          answer: 0,
+        },
+        {
+          question: "Which city is the capital of Kuwait ?",
+          options: ["Doha", "Manama", "Kuwait City"],
+          answer: 2,
+        },
+        {
+          question: "Which city is the capital of Croatia ?",
+          options: ["Ljubljana", "Zagreb", "Zagreb"],
+          answer: 1,
+        }
+      ];
+
+      nextQuestion();
+
+      // change text of questions
+      nextButton.addEventListener("click", () => {
+            result.textContent = "";
+            questionIndex++;
+            resetOptions();
+            nextQuestion();
+            if(questionIndex === questionsData.length - 1) {
+                nextButton.disabled = true
+                nextButton.style.backgroundColor = "#ced4da";
+                nextButton.style.borderColor = "#ced4da";
+            }
+
+        
+      });
+
+      function nextQuestion() {
+        question.textContent = questionsData[questionIndex].question;
+        option1.textContent = questionsData[questionIndex].options[0];
+        option2.textContent = questionsData[questionIndex].options[1];
+        option3.textContent = questionsData[questionIndex].options[2];
+      }
+
+      function resetOptions() {
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].checked = false;
+        }
+      }
+
+      function checkAnswer(optionIndex) {
+        console.log("optionIndex--",optionIndex)
+        if (optionIndex === questionsData[questionIndex].answer) {
+          result.textContent = "Correct! 🎉";
+          result.style.color = "green";
+        } else {
+          result.textContent = "Wrong! 😞 Try Again.";
+          result.style.color = "red";
+        }
+      }
+    </script>
+  </body>
+</html>
