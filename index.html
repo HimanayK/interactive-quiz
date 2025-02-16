@@ -12,11 +12,15 @@
         }
       body {
         font-family: Arial, sans-serif;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-top: 50px;
         background-color:  #b5d4f2;
+        background-image: linear-gradient(to right, rgba(198, 198, 189, 0.783), rgba(141, 141, 143, 0.9)), url('image.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
         
       }
 
@@ -25,7 +29,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+      
       }
+
       .questions {
         font-size: 1.8rem;
         height: 50vh;
@@ -33,6 +39,7 @@
         flex-direction: column;
         justify-content: space-evenly;
         padding: 1rem 2rem;
+        margin-top: 4rem;
         margin-bottom: 1rem;
         border-radius: 1rem;
         color: #ffff;
@@ -209,7 +216,8 @@
         console.log("optionIndex--",optionIndex)
         if (optionIndex === questionsData[questionIndex].answer) {
           result.textContent = "Correct! 🎉";
-          result.style.color = "green";
+          result.style.color = "#2f6ba7";
+          result.style.fontWeight = "700";
         } else {
           result.textContent = "Wrong! 😞 Try Again.";
           result.style.color = "red";
